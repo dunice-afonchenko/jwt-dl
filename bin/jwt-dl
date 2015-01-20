@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var lib  = path.join(__dirname, '../lib');
+var fs  = require('fs');
+var m = require(lib + '/index');
+
+function reportUsage() {
+	console.info('Usage: jwt-dl operation inFile outFile');
+	process.exit(0);
+}
+
+function reportError(err) {
+	console.error(err);
+	reportUsage()
+}
+
+function reportOut(out) {
+	var outFile = process.argv[4];
+
+	if (!outFile) {
+		console.info('Info: outFile is not set');
+		console.log(out);
+	} else {
+		console.info('Info: writing to', outFile);
+		if (typeof out !== 'string') {
+			out = JSON.stringify(out);
+		}
+		fs.writeFileSync(outFile, out, 'utf8');
+	}
+}
+
+var operation = process.argv[2];
+
+if (['-h', '--help'].indexOf(operation) !== -1) {
+	reportUsage()
+}
+
+if (!operation || ['decode', 'encode'].indexOf(operation) === -1) {
+	reportError('Error: operation is not set or is incorrect');
+}
+
+var inFile = process.argv[3];
+
+if (!inFile) {
+	reportError('Error: inFile is not set');
+}
+
+var inFileContent = fs.readFileSync(inFile, 'utf8');
+
+if (operation === 'encode') {
+	try {
+		var json = JSON.parse(inFileContent);
+	} catch (e) {
+		reportError('Error: could not parse json inFile');
+	}
+	var out = m.encode(json);
+} else {
+	var out = m.decode(inFileContent);
+}
+
+reportOut(out);
+
+console.info('Operation is successfull');
+

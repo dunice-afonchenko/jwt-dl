@@ -1,0 +1,24 @@
+{
+  "name": "jwt-dl",
+  "description": "JWT digital-logic",
+  "keywords": [
+    "javascript",
+    "crypto",
+    "jwt"
+  ],
+  "author": "Ivan Afonchenko",
+  "version": "0.0.1",
+  "main": "./lib/index",
+  "bin": {
+    "jwt-dl": "./bin/jwt-dl"
+  },
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dunice-afonchenko/jwt-dl.git"
+  },
+  "dependencies": {
+    "expand-home-dir": "0.0.2",
+    "jwt-simple": "^0.2.0"
+  }
+}
