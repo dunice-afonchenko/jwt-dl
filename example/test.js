@@ -1,3 +1,5 @@
 var jwt = require('jwt-dl');
 
-var encodedJSON = jwt.getDecodedJsonByPath('path/to/encoded/file');
+var encodedJSON = jwt.getDecodedJsonByPath(expandHomeDir('~/Work/out.json'));
+
+console.log(encodedJSON);
